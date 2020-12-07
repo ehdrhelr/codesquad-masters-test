@@ -10,9 +10,16 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         
         Main main = new Main();
-        main.inputWordNumberDirection(sc);
-        //main.moveCharToRight();
-        main.moveCharToLeft();
+        main.start(sc);
+        
+    }
+
+    public void start(Scanner sc) {
+        while (!word.equals("q")) {
+            inputWordNumberDirection(sc);
+            moveChar();
+            System.out.println();
+        }
     }
 
     public void inputWordNumberDirection(Scanner sc) {
@@ -22,6 +29,17 @@ public class Main {
         word = WordNumberDirection[0];
         number = WordNumberDirection[1];
         direction = WordNumberDirection[2];
+    }
+
+    public void moveChar() {
+        if (direction.equalsIgnoreCase("R")) {
+            moveCharToRight();
+            return;
+        }
+        if (direction.equalsIgnoreCase("L")) {
+            moveCharToLeft();
+            return;
+        }
     }
 
     public void moveCharToRight() {
