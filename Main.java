@@ -11,7 +11,8 @@ public class Main {
         
         Main main = new Main();
         main.inputWordNumberDirection(sc);
-        main.moveCharToRight();
+        //main.moveCharToRight();
+        main.moveCharToLeft();
     }
 
     public void inputWordNumberDirection(Scanner sc) {
@@ -43,5 +44,23 @@ public class Main {
         return targetIndex;
     }
 
+    public void moveCharToLeft() {
+        String[] eachCharOfWord = word.split("");
+        String[] newWord = new String[word.length()];
+        for (int i = 0; i < word.length(); i++) {
+            int targetIndex = getTargetIndexLeft(i);
+            newWord[targetIndex] = eachCharOfWord[i];
+        }
+        for (String str : newWord) {
+            System.out.print(str);
+        }
+    }
 
+    public int getTargetIndexLeft(int currentIndex) {
+        int targetIndex = currentIndex - Integer.valueOf(number);
+        if (targetIndex < 0) {
+            targetIndex += word.length();
+        }
+        return targetIndex;
+    }
 }
