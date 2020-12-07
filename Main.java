@@ -15,27 +15,50 @@ public class Main {
             {"G", "B", "B"}
         };
         printArr2D(cube);
-        String direction = inputDirection(sc);
-        while (!direction.equalsIgnoreCase("Q")) {
-            switch(direction) {
-                case "U" : cube = inputUL(cube); break;
-                case "U'" : cube = inputUR(cube); break; 
-                case "R" : cube = inputRU(cube); break;
-                case "R'" : cube = inputRD(cube); break;
-                case "L" : cube = inputLD(cube); break;
-                case "L'" : cube = inputLU(cube); break;
-                case "B" : cube = inputBR(cube); break;
-                case "B'" : cube = inputBL(cube); break;
-            }
-            printArr2D(cube);
-            direction = inputDirection(sc);
+        String successiveInput = inputDirection(sc);
+        System.out.println();
+        while (true) {
+            cube = getDirectionFromSuccessiveInput(cube, successiveInput);
+            successiveInput = inputDirection(sc);
+            System.out.println();
         }
-        System.out.println("Bye~");
+        // System.out.println("Bye~");
+    }
+
+    public String[][] printResult(String[][] cube, String direction) {
+        System.out.println(direction);
+        switch(direction) {
+            case "U" : cube = inputUL(cube); break;
+            case "U'" : cube = inputUR(cube); break; 
+            case "R" : cube = inputRU(cube); break;
+            case "R'" : cube = inputRD(cube); break;
+            case "L" : cube = inputLD(cube); break;
+            case "L'" : cube = inputLU(cube); break;
+            case "B" : cube = inputBR(cube); break;
+            case "B'" : cube = inputBL(cube); break;
+            default : return cube;
+        }
+        printArr2D(cube);
+        return cube;
     }
 
     public String inputDirection(Scanner sc) {
         System.out.print("CUBE> ");
         return sc.nextLine();
+    }
+
+    public String[][] getDirectionFromSuccessiveInput(String[][] arr, String successiveInput) {
+        String direction = "";
+        for(int i = 0; i < successiveInput.length(); i++) {
+            if (successiveInput.charAt(i) == '\'') continue;
+
+            direction = successiveInput.charAt(i) + "";
+            if (i != successiveInput.length() - 1 && successiveInput.charAt(i + 1) == '\'') {
+                direction += "'";    
+            }
+            arr = printResult(arr, direction);
+        }
+        return arr;
     }
 
     public void printArr2D(String[][] arr) {
