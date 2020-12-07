@@ -16,9 +16,15 @@ public class Main {
         };
         printArr2D(cube);
         String direction = inputDirection(sc);
-        switch(direction) {
-            case "U" : printArr2D(inputU(cube)); break;
+        while (!direction.equalsIgnoreCase("Q")) {
+            switch(direction) {
+                case "U" : cube = inputU(cube); break;
+                case "U'" : cube = inputUR(cube); break; 
+            }
+            printArr2D(cube);
+            direction = inputDirection(sc);
         }
+        System.out.println("Bye~");
     }
 
     public String inputDirection(Scanner sc) {
@@ -26,7 +32,7 @@ public class Main {
         return sc.nextLine();
     }
 
-    public void printArr2D(Object[][] arr) {
+    public void printArr2D(String[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 System.out.print(arr[i][j] + " ");
@@ -36,14 +42,32 @@ public class Main {
         System.out.println();
     }
 
-    public Object[][] inputU(Object[][] arr) {
-        Object[][] newArr = new Object[3][3];
+    public String[][] inputU(String[][] arr) {
+        String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 if (i == 0) {
                     int targetIndex = j - 1;
                     if (targetIndex < 0) {
-                        targetIndex += arr[0].length;
+                        targetIndex += arr[i].length;
+                    }
+                    newArr[i][targetIndex] = arr[i][j];
+                    continue;
+                }
+                newArr[i][j] = arr[i][j];
+            }
+        }
+        return newArr;
+    }
+
+    public String[][] inputUR(String[][] arr) {
+        String[][] newArr = new String[3][3];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (i == 0) {
+                    int targetIndex = j + 1;
+                    if (targetIndex >= arr[i].length) {
+                        targetIndex -= arr[i].length;
                     }
                     newArr[i][targetIndex] = arr[i][j];
                     continue;
