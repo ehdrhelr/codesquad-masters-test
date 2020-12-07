@@ -32,6 +32,14 @@ public class Main {
     }
 
     public void moveChar() {
+        if (direction.equalsIgnoreCase("R") && number.startsWith("-")) {
+            moveCharToLeft();
+            return;
+        }
+        if (direction.equalsIgnoreCase("L") && number.startsWith("-")) {
+            moveCharToRight();
+            return;
+        }
         if (direction.equalsIgnoreCase("R")) {
             moveCharToRight();
             return;
@@ -46,7 +54,7 @@ public class Main {
         String[] eachCharOfWord = word.split("");
         String[] newWord = new String[word.length()];
         for (int i = 0; i < word.length(); i++) {
-            int targetIndex = getTargetIndex(i);
+            int targetIndex = getTargetIndexRight(i);
             newWord[targetIndex] = eachCharOfWord[i];
         }
         for (String str : newWord) {
@@ -54,8 +62,8 @@ public class Main {
         }
     }
 
-    public int getTargetIndex(int currentIndex) {
-        int targetIndex = currentIndex + Integer.valueOf(number);
+    public int getTargetIndexRight(int currentIndex) {
+        int targetIndex = currentIndex + Math.abs(Integer.valueOf(number));
         if (targetIndex >= word.length()) {
             targetIndex -= word.length();
         }
@@ -75,7 +83,7 @@ public class Main {
     }
 
     public int getTargetIndexLeft(int currentIndex) {
-        int targetIndex = currentIndex - Integer.valueOf(number);
+        int targetIndex = currentIndex - Math.abs(Integer.valueOf(number));
         if (targetIndex < 0) {
             targetIndex += word.length();
         }
