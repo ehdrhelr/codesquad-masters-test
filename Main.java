@@ -18,9 +18,14 @@ public class Main {
         String direction = inputDirection(sc);
         while (!direction.equalsIgnoreCase("Q")) {
             switch(direction) {
-                case "U" : cube = inputU(cube); break;
+                case "U" : cube = inputUL(cube); break;
                 case "U'" : cube = inputUR(cube); break; 
-                case "R" : cube = inputR(cube); break;
+                case "R" : cube = inputRU(cube); break;
+                case "R'" : cube = inputRD(cube); break;
+                case "L" : cube = inputLD(cube); break;
+                case "L'" : cube = inputLU(cube); break;
+                case "B" : cube = inputBR(cube); break;
+                case "B'" : cube = inputBL(cube); break;
             }
             printArr2D(cube);
             direction = inputDirection(sc);
@@ -43,7 +48,7 @@ public class Main {
         System.out.println();
     }
 
-    public String[][] inputU(String[][] arr) {
+    public String[][] inputUL(String[][] arr) {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
@@ -79,7 +84,7 @@ public class Main {
         return newArr;
     }
 
-    public String[][] inputR(String[][] arr) {
+    public String[][] inputRU(String[][] arr) {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
@@ -97,5 +102,93 @@ public class Main {
         return newArr;
     }
 
-    
+    public String[][] inputRD(String[][] arr) {
+        String[][] newArr = new String[3][3];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (j == arr[i].length - 1) {
+                    int targetIndex = i + 1;
+                    if (targetIndex >= arr.length) {
+                        targetIndex -= arr.length;
+                    }
+                    newArr[targetIndex][j] = arr[i][j];
+                    continue;
+                }
+                newArr[i][j] = arr[i][j];
+            }
+        }
+        return newArr;
+    }
+
+    public String[][] inputLD(String[][] arr) {
+        String[][] newArr = new String[3][3];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (j == 0) {
+                    int targetIndex = i + 1;
+                    if (targetIndex >= arr.length) {
+                        targetIndex -= arr.length;
+                    }
+                    newArr[targetIndex][j] = arr[i][j];
+                    continue;
+                }
+                newArr[i][j] = arr[i][j];
+            }
+        }
+        return newArr;
+    }
+
+    public String[][] inputLU(String[][] arr) {
+        String[][] newArr = new String[3][3];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (j == 0) {
+                    int targetIndex = i - 1;
+                    if (targetIndex < 0) {
+                        targetIndex += arr.length;
+                    }
+                    newArr[targetIndex][j] = arr[i][j];
+                    continue;
+                }
+                newArr[i][j] = arr[i][j];
+            }
+        }
+        return newArr;
+    }
+
+    public String[][] inputBR(String[][] arr) {
+        String[][] newArr = new String[3][3];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (i == arr.length - 1) {
+                    int targetIndex = j + 1;
+                    if (targetIndex >= arr.length) {
+                        targetIndex -= arr.length;
+                    }
+                    newArr[i][targetIndex] = arr[i][j];
+                    continue;
+                }
+                newArr[i][j] = arr[i][j];
+            }
+        }
+        return newArr;
+    }
+
+    public String[][] inputBL(String[][] arr) {
+        String[][] newArr = new String[3][3];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (i == arr.length - 1) {
+                    int targetIndex = j - 1;
+                    if (targetIndex < 0) {
+                        targetIndex += arr[i].length;
+                    }
+                    newArr[i][targetIndex] = arr[i][j];
+                    continue;
+                }
+                newArr[i][j] = arr[i][j];
+            }
+        }
+        return newArr;
+    }  
 }
