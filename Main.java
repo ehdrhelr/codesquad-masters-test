@@ -59,7 +59,7 @@ public class Main {
 
     public int getTargetIndexRight(int currentIndex) {
         int targetIndex = currentIndex + Math.abs(Integer.valueOf(number));
-        if (targetIndex >= word.length()) {
+        while (targetIndex >= word.length()) {
             targetIndex -= word.length();
         }
         return targetIndex;
@@ -80,7 +80,7 @@ public class Main {
 
     public int getTargetIndexLeft(int currentIndex) {
         int targetIndex = currentIndex - Math.abs(Integer.valueOf(number));
-        if (targetIndex < 0) {
+        while (targetIndex < 0) {
             targetIndex += word.length();
         }
         return targetIndex;
