@@ -20,6 +20,7 @@ public class Main {
             switch(direction) {
                 case "U" : cube = inputU(cube); break;
                 case "U'" : cube = inputUR(cube); break; 
+                case "R" : cube = inputR(cube); break;
             }
             printArr2D(cube);
             direction = inputDirection(sc);
@@ -77,4 +78,24 @@ public class Main {
         }
         return newArr;
     }
+
+    public String[][] inputR(String[][] arr) {
+        String[][] newArr = new String[3][3];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (j == arr[i].length - 1) {
+                    int targetIndex = i - 1;
+                    if (targetIndex < 0) {
+                        targetIndex += arr.length;
+                    }
+                    newArr[targetIndex][j] = arr[i][j];
+                    continue;
+                }
+                newArr[i][j] = arr[i][j];
+            }
+        }
+        return newArr;
+    }
+
+    
 }
