@@ -13,7 +13,7 @@ public class Main {
     }
 
     public void start(Scanner sc) {
-        while (!word.equals("q")) {
+        while (true) {
             inputWordNumberDirection(sc);
             System.out.println(moveChar());
         }
@@ -29,27 +29,11 @@ public class Main {
     }
 
     public String moveChar() {
-        if (direction.equalsIgnoreCase("R") && number.startsWith("-")) {
-            return moveCharToLeft();
-        }
-        if (direction.equalsIgnoreCase("L") && number.startsWith("-")) {
-            return moveCharToRight();
-        }
-        if (direction.equalsIgnoreCase("R")) {
-            return moveCharToRight();
-        }
-        if (direction.equalsIgnoreCase("L")) {
-            return moveCharToLeft();
-        }
-        return "";
-    }
-
-    public String moveCharToRight() {
         String[] eachCharOfWord = word.split("");
         String[] eachCharOfNewWord = new String[word.length()];
         String newWord = "";
         for (int i = 0; i < word.length(); i++) {
-            eachCharOfNewWord[getTargetIndexRight(i)] = eachCharOfWord[i];
+            eachCharOfNewWord[getTargetIndex(i)] = eachCharOfWord[i];
         }
         for (String eachChar : eachCharOfNewWord) {
             newWord += eachChar;
@@ -57,7 +41,23 @@ public class Main {
         return newWord;
     }
 
-    public int getTargetIndexRight(int currentIndex) {
+    public int getTargetIndex(int currentIndex) {
+        if (direction.equalsIgnoreCase("R") && number.startsWith("-")) {
+            return pushLeft(currentIndex);
+        }
+        if (direction.equalsIgnoreCase("L") && number.startsWith("-")) {
+            return pushRight(currentIndex);
+        }
+        if (direction.equalsIgnoreCase("R")) {
+            return pushRight(currentIndex);
+        }
+        if (direction.equalsIgnoreCase("L")) {
+            return pushLeft(currentIndex);
+        }
+        return -1;
+    }
+
+    public int pushRight(int currentIndex) {
         int targetIndex = currentIndex + Math.abs(Integer.valueOf(number));
         while (targetIndex >= word.length()) {
             targetIndex -= word.length();
@@ -65,20 +65,7 @@ public class Main {
         return targetIndex;
     }
 
-    public String moveCharToLeft() {
-        String[] eachCharOfWord = word.split("");
-        String[] eachCharOfNewWord = new String[word.length()];
-        String newWord = "";
-        for (int i = 0; i < word.length(); i++) {
-            eachCharOfNewWord[getTargetIndexLeft(i)] = eachCharOfWord[i];
-        }
-        for (String eachChar : eachCharOfNewWord) {
-            newWord += eachChar;
-        }
-        return newWord;
-    }
-
-    public int getTargetIndexLeft(int currentIndex) {
+    public int pushLeft(int currentIndex) {
         int targetIndex = currentIndex - Math.abs(Integer.valueOf(number));
         while (targetIndex < 0) {
             targetIndex += word.length();
