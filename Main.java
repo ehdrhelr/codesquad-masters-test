@@ -6,28 +6,44 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Main main = new Main();
         String[][][] cube = main.getInitialCube();
-        Rotation rotation = new Rotation();
-        cube = rotation.rotateClockwise(cube, 1);
         Printer.printCube(cube);
-        cube = rotation.rotateClockwise(cube, 2);
-        Printer.printCube(cube);
-        cube = rotation.rotateClockwise(cube, 3);
-        Printer.printCube(cube);
-        cube = rotation.rotateClockwise(cube, 4);
-        Printer.printCube(cube);
-        cube = rotation.rotateClockwise(cube, 5);
-        Printer.printCube(cube);
+        Rotation rot = new Rotation();
+        while (true) {
+            System.out.print("CUBE> ");
+            int targetDimension = main.inputRotation(sc);
+            if (targetDimension == -1) continue;
+            cube = rot.rotateClockwise(cube, targetDimension);
+            Printer.printCube(cube);
+        }
+        
+    }
 
+    public int inputRotation(Scanner sc) {
+        String rotation = sc.nextLine();
+        System.out.println();
+        int targetDimension = -1;
+        switch(rotation) {
+            case "U" : targetDimension = 0; break;
+            case "L" : targetDimension = 1; break;
+            case "F" : targetDimension = 2; break;
+            case "R" : targetDimension = 3; break;
+            case "B" : targetDimension = 4; break;
+            case "D" : targetDimension = 5; break;
+        }
+        if (0 <= targetDimension && targetDimension <= 5) {
+            System.out.println(rotation);
+        }
+        return targetDimension;
     }
 
     public String[][][] getInitialCube() {
         String[][][] cube = {
-            {   { "1", "2", "3" },      // 초기 up, index 0
-                { "4", "5", "6" },
-                { "7", "8", "9" }   },
-            {   { "A", "B", "C" },      // 초기 left, index 1
-                { "D", "E", "F" },
-                { "G", "H", "I" }   },
+            {   { "B", "B", "B" },      // 초기 up, index 0
+                { "B", "B", "B" },
+                { "B", "B", "B" }   },
+            {   { "W", "W", "W" },      // 초기 left, index 1
+                { "W", "W", "W" },
+                { "W", "W", "W" }   },
             {   { "O", "O", "O" },      // 초기 front, index 2
                 { "O", "O", "O" },
                 { "O", "O", "O" }   },    
@@ -41,7 +57,6 @@ public class Main {
                 { "R", "R", "R" },
                 { "R", "R", "R" }   }
         };
-        Printer.printCube(cube);
         return cube;
     }
 }
