@@ -7,7 +7,7 @@ public class Main {
         Main main = new Main();
         String[][][] cube = main.getInitialCube();
         Rotation rotation = new Rotation();
-        cube = rotation.rotateClockwise(cube, 0);
+        cube = rotation.rotateClockwise(cube, 1);
         Printer.printCube(cube);
 
     }
@@ -17,9 +17,9 @@ public class Main {
             {   { "1", "2", "3" },      // 초기 up, index 0
                 { "4", "5", "6" },
                 { "7", "8", "9" }   },
-            {   { "W", "W", "W" },      // 초기 left, index 1
-                { "W", "W", "W" },
-                { "W", "W", "W" }   },
+            {   { "A", "B", "C" },      // 초기 left, index 1
+                { "D", "E", "F" },
+                { "G", "H", "I" }   },
             {   { "O", "O", "O" },      // 초기 front, index 2
                 { "O", "O", "O" },
                 { "O", "O", "O" }   },    
