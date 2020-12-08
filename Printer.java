@@ -1,32 +1,48 @@
 public class Printer {
 
-    public static void print2DArr(String[][] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            printLongBlank(i);
-            for (int j = 0; j < arr[i].length; j++) {
-                printBlankBetweenDimensionsInMid(i, j);
-                System.out.printf("%s ", arr[i][j]);
-            }            
-            printBlankBetweenTopBottomAndMid(i);
-            System.out.println();
-        }
+    public static void printCube(String[][][] cube) {
+        printUp(cube);
+        printMid(cube);
+        printDown(cube);
     }
 
-    public static void printLongBlank(int i) {
-        if (i < 3 || 5 < i) {
+    public static void printUp(String[][][] cube) {
+        for (int i = 0; i < cube[0].length; i++) {
             System.out.printf("%15s", " ");
-        }
-    }
-    
-    public static void printBlankBetweenTopBottomAndMid(int i) {
-        if (i == 2 || i == 5) {
+            for (int j = 0; j < cube[0][i].length; j++) {
+                System.out.printf("%s ", cube[0][i][j]);
+            }
             System.out.println();
+        }
+        System.out.println();
+    }
+
+    public static void printMid(String[][][] cube) {
+        for (int i = 0; i < cube[0].length; i++) {
+            for (int j = 1; j < cube.length - 1; j++) {
+                printMidElements(cube, i, j);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    public static void printMidElements(String[][][] cube, int i, int j) {
+        for (int k = 0; k < cube[j][i].length; k++) {
+            System.out.printf("%s ", cube[j][i][k]);
+        }
+        if (i != cube.length - 2) {
+            System.out.printf("%4s", " ");
         }
     }
 
-    public static void printBlankBetweenDimensionsInMid(int i, int j) {
-        if ((3 <= i && i <= 5) && (j % 3 == 0 && j != 0)) {
-            System.out.printf("%4s", " ");
+    public static void printDown(String[][][] cube) {
+        for (int i = 0; i < cube[5].length; i++) {
+            System.out.printf("%15s", " ");
+            for (int j = 0; j < cube[5][i].length; j++) {
+                System.out.printf("%s ", cube[5][i][j]);
+            }
+            System.out.println();
         }
     }
 }
