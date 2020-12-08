@@ -18,28 +18,10 @@ public class Main {
         String input = inputDirection(sc);
         
         while (!input.equalsIgnoreCase("Q")) {
-            cube = getDirectionFromInput(cube, input);
-            input = inputDirection(sc);
-            
+            cube = pushToDirection(cube, input);
+            input = inputDirection(sc);          
         }
         System.out.println("Bye~");
-    }
-
-    public String[][] printResult(String[][] cube, String direction) {
-        switch(direction) {
-            case "U" : cube = Input.moveTopLeft(cube); break;
-            case "U'" : cube = Input.moveTopRight(cube); break; 
-            case "R" : cube = Input.moveRightUp(cube); break;
-            case "R'" : cube = Input.moveRightDown(cube); break;
-            case "L" : cube = Input.moveLeftDown(cube); break;
-            case "L'" : cube = Input.moveLeftUp(cube); break;
-            case "B" : cube = Input.moveBottomRight(cube); break;
-            case "B'" : cube = Input.moveBottomLeft(cube); break;
-            default : return cube;
-        }
-        System.out.println(direction);
-        printArr2D(cube);
-        return cube;
     }
 
     public String inputDirection(Scanner sc) {
@@ -51,17 +33,36 @@ public class Main {
         return input;
     }
 
-    public String[][] getDirectionFromInput(String[][] cube, String input) {
+    public String[][] pushToDirection(String[][] cube, String input) {
         String direction = "";
         for(int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '\'') continue;
 
             direction = input.charAt(i) + "";
+
             if (i != input.length() - 1 && input.charAt(i + 1) == '\'') {
                 direction += "'";    
             }
+
             cube = printResult(cube, direction);
         }
+        return cube;
+    }
+
+    public String[][] printResult(String[][] cube, String direction) {
+        switch(direction) {
+            case "U" : cube = Input.pushTopLeft(cube); break;
+            case "U'" : cube = Input.pushTopRight(cube); break; 
+            case "R" : cube = Input.pushRightUp(cube); break;
+            case "R'" : cube = Input.pushRightDown(cube); break;
+            case "L" : cube = Input.pushLeftDown(cube); break;
+            case "L'" : cube = Input.pushLeftUp(cube); break;
+            case "B" : cube = Input.pushBottomRight(cube); break;
+            case "B'" : cube = Input.pushBottomLeft(cube); break;
+            default : return cube;
+        }
+        System.out.println(direction);
+        printArr2D(cube);
         return cube;
     }
 
