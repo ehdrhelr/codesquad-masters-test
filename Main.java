@@ -16,11 +16,11 @@ public class Main {
         while (true) {
             System.out.print("CUBE> ");
             String input = sc.nextLine();
-            getTargetDimensionsInInput(cube, input, rot);
+            cube = getNewCube(cube, input, rot);
         }
     }
 
-    public void getTargetDimensionsInInput(String[][][] cube, String input, Rotation rot) {
+    public String[][][] getNewCube(String[][][] cube, String input, Rotation rot) {
         String target = "";
         for (int i = 0; i < input.length(); i++) {
             target = input.charAt(i) + "";
@@ -29,6 +29,7 @@ public class Main {
             cube = rot.rotateClockwise(cube, targetDimension);
             Printer.printCube(cube);
         }
+        return cube;
     }
 
     public int inputTargetDimension(String rotation) {
