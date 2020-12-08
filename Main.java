@@ -11,6 +11,10 @@ public class Main {
         Printer.printCube(cube);
         cube = rotation.rotateClockwise(cube, 2);
         Printer.printCube(cube);
+        cube = rotation.rotateClockwise(cube, 3);
+        Printer.printCube(cube);
+        cube = rotation.rotateClockwise(cube, 4);
+        Printer.printCube(cube);
 
     }
 
