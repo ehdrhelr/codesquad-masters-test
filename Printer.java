@@ -4,6 +4,7 @@ public class Printer {
         printUp(cube);
         printMid(cube);
         printDown(cube);
+        System.out.println();
     }
 
     public static void printUp(String[][][] cube) {

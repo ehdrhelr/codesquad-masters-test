@@ -5,14 +5,18 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Main main = new Main();
-        main.getInitialCube();
+        String[][][] cube = main.getInitialCube();
+        Rotation rotation = new Rotation();
+        cube = rotation.rotateClockwise(cube, 0);
+        Printer.printCube(cube);
+        
     }
 
-    public void getInitialCube() {
+    public String[][][] getInitialCube() {
         String[][][] cube = {
-            {   { "B", "B", "B" },      // 초기 up, index 0
-                { "B", "B", "B" },
-                { "B", "B", "B" }   },
+            {   { "1", "2", "3" },      // 초기 up, index 0
+                { "4", "5", "6" },
+                { "7", "8", "9" }   },
             {   { "W", "W", "W" },      // 초기 left, index 1
                 { "W", "W", "W" },
                 { "W", "W", "W" }   },
@@ -30,5 +34,6 @@ public class Main {
                 { "R", "R", "R" }   }
         };
         Printer.printCube(cube);
+        return cube;
     }
 }
