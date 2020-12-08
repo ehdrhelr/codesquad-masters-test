@@ -15,6 +15,8 @@ public class Main {
         Printer.printCube(cube);
         cube = rotation.rotateClockwise(cube, 4);
         Printer.printCube(cube);
+        cube = rotation.rotateClockwise(cube, 5);
+        Printer.printCube(cube);
 
     }
 

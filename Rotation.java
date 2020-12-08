@@ -87,6 +87,9 @@ public class Rotation {
         if (targetDimension == 4) {
             return rotateSideDimensionsOfBack(newCube, cube);
         }
+        if (targetDimension == 5) {
+            return rotateSideDimensionsOfDown(newCube, cube);
+        }
         return newCube;
     }
 
@@ -169,5 +172,22 @@ public class Rotation {
             newCube[0][0][i] = cube[3][i][2];
         }
         return newCube;
+    }
+
+    public String[][][] rotateSideDimensionsOfDown(String[][][] newCube, String[][][] cube) {
+        for (int i = 1; i < cube.length - 1; i++) {
+            for (int j = 0; j < cube[i][0].length; j++) {
+                newCube[getTargetIndexOfSideDimensionsOfDown(i)][2][j] = cube[i][2][j];
+            }
+        }
+        return newCube;
+    }
+
+    public int getTargetIndexOfSideDimensionsOfDown(int i) {
+        int targetFirstIndex = i + 1;
+        if (targetFirstIndex > 4) {
+            targetFirstIndex = 1;
+        }
+        return targetFirstIndex;
     }
 }
