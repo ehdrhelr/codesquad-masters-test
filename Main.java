@@ -9,6 +9,8 @@ public class Main {
         Rotation rotation = new Rotation();
         cube = rotation.rotateClockwise(cube, 1);
         Printer.printCube(cube);
+        cube = rotation.rotateClockwise(cube, 2);
+        Printer.printCube(cube);
 
     }
 
