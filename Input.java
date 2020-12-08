@@ -4,12 +4,9 @@ public class Input {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (i == 0) {
-                    int targetIndex = j - 1;
-                    if (targetIndex < 0) {
-                        targetIndex += arr[i].length;
-                    }
-                    newArr[i][targetIndex] = arr[i][j];
+                if (isPushTopLine(i)) {
+                    int target = getTargetIndexOnLeftPush(arr, i, j);
+                    newArr[i][target] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
@@ -22,12 +19,9 @@ public class Input {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (i == 0) {
-                    int targetIndex = j + 1;
-                    if (targetIndex >= arr[i].length) {
-                        targetIndex -= arr[i].length;
-                    }
-                    newArr[i][targetIndex] = arr[i][j];
+                if (isPushTopLine(i)) {
+                    int target = getTargetIndexOnRightPush(arr, i, j);
+                    newArr[i][target] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
@@ -40,12 +34,9 @@ public class Input {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (j == arr[i].length - 1) {
-                    int targetIndex = i - 1;
-                    if (targetIndex < 0) {
-                        targetIndex += arr.length;
-                    }
-                    newArr[targetIndex][j] = arr[i][j];
+                if (isPushRightLine(arr, i, j)) {
+                    int target = getTargetIndexOnUpPush(arr, i);
+                    newArr[target][j] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
@@ -58,12 +49,9 @@ public class Input {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (j == arr[i].length - 1) {
-                    int targetIndex = i + 1;
-                    if (targetIndex >= arr.length) {
-                        targetIndex -= arr.length;
-                    }
-                    newArr[targetIndex][j] = arr[i][j];
+                if (isPushRightLine(arr, i, j)) {
+                    int target = getTargetIndexOnDownPush(arr, i);
+                    newArr[target][j] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
@@ -76,12 +64,9 @@ public class Input {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (j == 0) {
-                    int targetIndex = i + 1;
-                    if (targetIndex >= arr.length) {
-                        targetIndex -= arr.length;
-                    }
-                    newArr[targetIndex][j] = arr[i][j];
+                if (isPushLeftLine(j)) {
+                    int target = getTargetIndexOnDownPush(arr, i);
+                    newArr[target][j] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
@@ -95,11 +80,8 @@ public class Input {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 if (j == 0) {
-                    int targetIndex = i - 1;
-                    if (targetIndex < 0) {
-                        targetIndex += arr.length;
-                    }
-                    newArr[targetIndex][j] = arr[i][j];
+                    int target = getTargetIndexOnUpPush(arr, i);
+                    newArr[target][j] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
@@ -112,12 +94,9 @@ public class Input {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (i == arr.length - 1) {
-                    int targetIndex = j + 1;
-                    if (targetIndex >= arr.length) {
-                        targetIndex -= arr.length;
-                    }
-                    newArr[i][targetIndex] = arr[i][j];
+                if (isPushBottomLine(arr, i)) {
+                    int target = getTargetIndexOnRightPush(arr, i, j);
+                    newArr[i][target] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
@@ -130,35 +109,13 @@ public class Input {
         String[][] newArr = new String[3][3];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (i == arr.length - 1) {
-                    int targetIndex = j - 1;
-                    if (targetIndex < 0) {
-                        targetIndex += arr[i].length;
-                    }
-                    newArr[i][targetIndex] = arr[i][j];
+                if (isPushBottomLine(arr, i)) {
+                    int target = getTargetIndexOnLeftPush(arr, i, j);
+                    newArr[i][target] = arr[i][j];
                     continue;
                 }
                 newArr[i][j] = arr[i][j];
             }
-        }
-        return newArr;
-    }
-
-    public static String[][] getNewCube(String[][] arr) {
-        String[][] newArr = new String[3][3];
-        for (int i = 0; i < arr.length; i++) {
-            newArr = searchForEachElement(newArr, arr, i);
-        }
-        return newArr;
-    }
-
-    public static String[][] searchForEachElement(String[][] newArr, String[][] arr, int i) {
-        for (int j = 0; j < arr[i].length; j++) {
-            if (i == arr.length - 1) {
-                newArr[i][getTargetIndexOnLeftPush(arr, i, j)] = arr[i][j];
-                continue;
-            }
-            newArr[i][j] = arr[i][j];
         }
         return newArr;
     }
