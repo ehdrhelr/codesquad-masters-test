@@ -5,21 +5,33 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Main main = new Main();
-        String[][][] cube = main.getInitialCube();
+        main.start(sc);
+        
+    }
+
+    public void start(Scanner sc) {
+        String[][][] cube = getInitialCube();
         Printer.printCube(cube);
         Rotation rot = new Rotation();
         while (true) {
             System.out.print("CUBE> ");
-            int targetDimension = main.inputRotation(sc);
+            String input = sc.nextLine();
+            getTargetDimensionsInInput(cube, input, rot);
+        }
+    }
+
+    public void getTargetDimensionsInInput(String[][][] cube, String input, Rotation rot) {
+        String target = "";
+        for (int i = 0; i < input.length(); i++) {
+            target = input.charAt(i) + "";
+            int targetDimension = inputTargetDimension(target);
             if (targetDimension == -1) continue;
             cube = rot.rotateClockwise(cube, targetDimension);
             Printer.printCube(cube);
         }
-        
     }
 
-    public int inputRotation(Scanner sc) {
-        String rotation = sc.nextLine();
+    public int inputTargetDimension(String rotation) {
         System.out.println();
         int targetDimension = -1;
         switch(rotation) {
