@@ -2,11 +2,12 @@ public class Rotation {
 
     public String[][][] rotateClockwise(String[][][] cube, int targetDimension) {
         String[][][] newCube = new String[6][3][3];
-        newCube = rotateMyDimension(newCube, cube, targetDimension);
+        newCube = rotateTargetDimension(newCube, cube, targetDimension);
+        newCube = rotateOtherDimensions(newCube, cube, targetDimension);
         return newCube;
     }
-    
-    public String[][][] rotateMyDimension(
+
+    public String[][][] rotateTargetDimension(
                             String[][][] newCube, String[][][] cube, int targetDimension) {
         newCube = rotateTopToRight(newCube, cube, targetDimension);
         newCube = rotateRightToBottom(newCube, cube, targetDimension);
@@ -67,5 +68,31 @@ public class Rotation {
             newCube[i][j][k] = cube[i][j][k];
         }
         return newCube;
+    }
+
+
+    public String[][][] rotateOtherDimensions(
+                            String[][][] newCube, String[][][] cube, int targetDimension) {
+        if (targetDimension == 0) {
+            rotateSideDimensionsOfUp(newCube, cube);
+        }
+        return newCube;
+    }
+
+    public String[][][] rotateSideDimensionsOfUp(String[][][] newCube, String[][][] cube) {
+        for (int i = 1; i < cube.length - 1; i++) {
+            for (int j = 0; j < cube[i][0].length; j++) {
+                newCube[getTargetFirstIndex(i)][0][j] = cube[i][0][j];
+            }
+        }
+        return newCube;
+    }
+
+    public int getTargetFirstIndex(int i) {
+        int targetFirstIndex = i - 1;
+        if (targetFirstIndex < 1) {
+            targetFirstIndex = 4;
+        }
+        return targetFirstIndex;
     }
 }

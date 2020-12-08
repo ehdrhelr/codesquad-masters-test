@@ -9,7 +9,7 @@ public class Main {
         Rotation rotation = new Rotation();
         cube = rotation.rotateClockwise(cube, 0);
         Printer.printCube(cube);
-        
+
     }
 
     public String[][][] getInitialCube() {
