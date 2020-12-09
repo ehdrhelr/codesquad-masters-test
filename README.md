@@ -1,74 +1,169 @@
 <h3>🔧 구현한 코드</h3>
 
-1. 사용자로부터 단어, 숫자, 방향을 입력받는다.
-    - 띄어쓰기를 기준으로 나눈 후 배열에 저장한다.
-    - 각 배열에 저장된 데이터를 각각 멤버변수 word, number, direction에 저장한다.
+<h4>Main 클래스</h4>
+
+1. 초기 큐브를 설정하고 출력한다.
+    - 밀어낼 방향을 반복을 통해 계속 입력한다.
+    - "Q"가 입력되면 반복문을 빠져나오고 "Bye~"출력과 함께 종료된다.
 ```
-public void inputWordNumberDirection(Scanner sc) {
-    System.out.print("> ");
+public void start(Scanner sc) {
+    String[][] cube = {
+        {"R", "R", "W"},
+        {"G", "C", "W"},
+        {"G", "B", "B"}
+    };
+    printArr2D(cube);
+    String input = inputDirection(sc);
+
+    while (!input.equalsIgnoreCase("Q")) {
+        cube = pushToDirection(cube, input);
+        input = inputDirection(sc);          
+    }
+    System.out.println("Bye~");
+    }
+```
+2. 밀어낼 방향을 입력하고 그 값을 반환한다.
+```
+public String inputDirection(Scanner sc) {
+    System.out.print("CUBE> ");
     String input = sc.nextLine();
-    String[] WordNumberDirection = input.split(" ");
-    word = WordNumberDirection[0];
-    number = WordNumberDirection[1];
-    direction = WordNumberDirection[2];
+    if (!input.equalsIgnoreCase("Q")){ 
+        System.out.println();
+    }
+    return input;
 }
 ```
-2. 입력된 word의 각 문자를 배열에 담고, 밀려난 word의 각 문자를 담을 배열을 생성한다.
-   - direction(왼쪽 또는 오른쪽)으로 number만큼 밀려난 위치를 target index로 삼는다.
-   - word 각 문자를 저장한 배열의 index를 돌면서 새로 밀려날 위치 target index를 확인한다.
-   -  해당 index의 데이터를 newWord의 각 문자를 저장할 배열의 target index에 저장한다.
+3. 방향이 입력되면 그 방향으로 큐브를 밀어낸 후 출력한다.
+   - 여러개의 방향이 입력되면 for문을 돌면서 한 방향씩 출력한다.
 ```
-public String moveCharToRight() {
-    String[] eachCharOfWord = word.split("");
-    String[] eachCharOfNewWord = new String[word.length()];
-    String newWord = "";
-    for (int i = 0; i < word.length(); i++) {
-        eachCharOfNewWord[getTargetIndex(i)] = eachCharOfWord[i];
+public String[][] pushToDirection(String[][] cube, String input) {
+    String direction = "";
+    for(int i = 0; i < input.length(); i++) {
+        if (input.charAt(i) == '\'') continue;
+
+        direction = input.charAt(i) + "";
+
+        if (i != input.length() - 1 && input.charAt(i + 1) == '\'') {
+            direction += "'";    
+        }
+
+        cube = printResult(cube, direction);
     }
-    for (String eachChar : eachCharOfNewWord) {
-        newWord += eachChar;
+    return cube;
+}
+```
+4. 입력된 방향에 따라서 Input클래스의 메서드를 호출하여 큐브를 밀어낸다.
+   - 밀어낸 큐브를 출력하는 메서드를 호출한다.
+```
+public String[][] printResult(String[][] cube, String direction) {
+    switch(direction) {
+        case "U" : cube = Input.pushTopLeft(cube); break;
+        case "U'" : cube = Input.pushTopRight(cube); break; 
+        case "R" : cube = Input.pushRightUp(cube); break;
+        case "R'" : cube = Input.pushRightDown(cube); break;
+        case "L" : cube = Input.pushLeftDown(cube); break;
+        case "L'" : cube = Input.pushLeftUp(cube); break;
+        case "B" : cube = Input.pushBottomRight(cube); break;
+        case "B'" : cube = Input.pushBottomLeft(cube); break;
+        default : return cube;
     }
-    return newWord;
+    System.out.println(direction);
+    printArr2D(cube);
+    return cube;
+}
+```
+5. 문자열로된 2차원 배열을 출력하는 메서드.
+```  
+public void printArr2D(String[][] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        for (int j = 0; j < arr[i].length; j++) {
+            System.out.print(arr[i][j] + " ");
+        } 
+        System.out.println();
+    }
+    System.out.println();
 }
 ```
 
-3. 입력된 number와 direction에 따라 word를 어느방향으로 얼만큼 밀어낼지 정한다.
-    - direction이 'R'이면 오른쪽으로 number만큼 밀어낸다.
-    - direction이 'L'이면 왼쪽으로 number만큼 밀어낸다.
-    - number가 음수이면 입력된 direction과 반대반향으로 밀어낸다.
+<h4>Input 클래스</h4>
+
+1. 큐브를 해당 방향으로 밀어낸 후 반환한다.
+    - 해당 방향으로 밀어낸 라인을 새로운 큐브에 저장한다.
+    - 새로운 큐브의 그 외 라인은 기존의 큐브의 요소들을 저장한다.
 ```
-public int getTargetIndex(int currentIndex) {
-    if (direction.equalsIgnoreCase("R") && number.startsWith("-")) {
-        return pushLeft(currentIndex);
+public static String[][] pushTopLeft(String[][] arr) {
+    String[][] newArr = new String[3][3];
+    for (int i = 0; i < arr.length; i++) {
+        for (int j = 0; j < arr[i].length; j++) {
+            if (isPushTopLine(i)) {
+                int target = getTargetIndexOnLeftPush(arr, i, j);
+                newArr[i][target] = arr[i][j];
+                continue;
+            }
+            newArr[i][j] = arr[i][j];
+        }
     }
-    if (direction.equalsIgnoreCase("L") && number.startsWith("-")) {
-        return pushRight(currentIndex);
-    }
-    if (direction.equalsIgnoreCase("R")) {
-        return pushRight(currentIndex);
-    }
-    if (direction.equalsIgnoreCase("L")) {
-        return pushLeft(currentIndex);
-    }
-    return -1;
+    return newArr;
+}
+
+public static String[][] pushTopRight(String[][] arr) { ... }
+public static String[][] pushRightUp(String[][] arr) { ... }
+public static String[][] pushRightDown(String[][] arr) { ... }
+public static String[][] pushLeftDown(String[][] arr) { ... }
+public static String[][] pushLeftUp(String[][] arr) { ... }
+public static String[][] pushBottomRight(String[][] arr) { ... }
+public static String[][] pushBottomLeft(String[][] arr) { ... }
+
+```
+2. 밀어낼 라인인지 판단한다.
+```
+public static boolean isPushTopLine(int i) {
+    return i == 0;
+}
+
+public static boolean isPushRightLine(String[][] arr, int i, int j) {
+    return j == arr[i].length - 1;
+}
+
+public static boolean isPushLeftLine(int j) {
+    return j == 0;
+}
+
+public static boolean isPushBottomLine(String[][] arr, int i) {
+    return i == arr.length - 1;
 }
 ```
-4. target index는 오른쪽으로 이동 시, 현재 index에서 number만큼 더한 값이다.
-    - target index가 word의 길이를 초과할 경우, 반대쪽으로 채우기 위해 word의 길이만큼 빼준다.
-    - 왼쪽으로 이동 시에는 그 반대다.
+
+3. 밀어낼 방향에 따라서 기존 큐브 요소들이 이동할 새로운 인덱스를 가져온다.
 ```
-public int pushRight(int currentIndex) {
-    int targetIndex = currentIndex + Math.abs(Integer.valueOf(number));
-    while (targetIndex >= word.length()) {
-        targetIndex -= word.length();
+public static int getTargetIndexOnLeftPush(String[][] arr, int i, int j) {
+    int targetIndex = j - 1;
+    if (targetIndex < 0) {
+        targetIndex += arr[i].length;
     }
     return targetIndex;
 }
 
-public int pushLeft(int currentIndex) {
-    int targetIndex = currentIndex - Math.abs(Integer.valueOf(number));
-    while (targetIndex < 0) {
-        targetIndex += word.length();
+public static int getTargetIndexOnDownPush(String[][] arr, int i) {
+    int targetIndex = i + 1;
+    if (targetIndex >= arr.length) {
+        targetIndex -= arr.length;
+    }
+    return targetIndex;
+}
+
+public static int getTargetIndexOnUpPush(String[][] arr, int i) {
+    int targetIndex = i - 1;
+    if (targetIndex < 0) {
+        targetIndex += arr.length;
+    }
+    return targetIndex;
+}
+
+public static int getTargetIndexOnRightPush(String[][] arr, int i, int j) {
+    int targetIndex = j + 1;
+    if (targetIndex >= arr[i].length) {
+        targetIndex -= arr[i].length;
     }
     return targetIndex;
 }
