@@ -3,7 +3,7 @@ package cube.direction;
 public class CounterClockwise {
 
     public String[][][] rotateTargetDimension(
-                            String[][][] newCube, String[][][] cube, int targetDimension) {
+                    String[][][] newCube, String[][][] cube, int targetDimension) {
         newCube = rotateTopToLeft(newCube, cube, targetDimension);
         newCube = rotateRightToTop(newCube, cube, targetDimension);
         newCube = rotateBottomToRight(newCube, cube, targetDimension);
@@ -14,15 +14,16 @@ public class CounterClockwise {
     }
 
     public String[][][] rotateTopToLeft(
-                                String[][][] newCube, String[][][] cube, int targetDimension) {
+                    String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
-            newCube[targetDimension][cube[targetDimension].length - i - 1][0] = cube[targetDimension][0][i];
+            newCube[targetDimension][cube[targetDimension].length - i - 1][0] 
+            = cube[targetDimension][0][i];
         }
         return newCube;
     }
 
     public String[][][] rotateRightToTop(
-                                String[][][] newCube, String[][][] cube, int targetDimension) {
+                    String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
             newCube[targetDimension][0][i] = cube[targetDimension][i][2];
         }
@@ -30,7 +31,7 @@ public class CounterClockwise {
     }
 
     public String[][][] rotateBottomToRight(
-                                String[][][] newCube, String[][][] cube, int targetDimension) {
+                    String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
             newCube[targetDimension][cube[targetDimension].length - i - 1][2] 
             = cube[targetDimension][2][i];
@@ -39,7 +40,7 @@ public class CounterClockwise {
     }
 
     public String[][][] rotateLeftToBottom(
-                                String[][][] newCube, String[][][] cube, int targetDimension) {
+                    String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
             newCube[targetDimension][2][i] = cube[targetDimension][i][0];
         }
@@ -47,14 +48,11 @@ public class CounterClockwise {
     }
 
     public String[][][] inputOldDataExceptTargetDimension(
-                                    String[][][] newCube, String[][][] cube, int targetDimension) {
+                    String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube.length; i++) {
             if (i == targetDimension) continue;
             for (int j = 0; j < cube[i].length; j++) {
-                // newCube = inputElements(newCube, cube, i, j);
-                for (int k = 0; k < cube[i][j].length; k++) {
-                    newCube[i][j][k] = cube[i][j][k];
-                }
+                newCube = inputElements(newCube, cube, i, j);
             }
         }
         return newCube;
@@ -68,7 +66,7 @@ public class CounterClockwise {
     }
 
     public String[][][] rotateOtherDimensions(
-                            String[][][] newCube, String[][][] cube, int targetDimension) {
+                    String[][][] newCube, String[][][] cube, int targetDimension) {
         if (targetDimension == 0) {
             return rotateSideDimensionsOfUp(newCube, cube);
         }

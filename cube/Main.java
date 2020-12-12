@@ -6,16 +6,21 @@ import java.util.*;
 public class Main {
 
     int rotationCount = 0;
+    Rotation rotation;
+    String[][][] cube;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Main main = new Main();
         main.start(sc);
     }
 
-    public void start(Scanner sc) {
-        String[][][] cube = getInitialCube();
+    Main() {
+        rotation = new Rotation();
+        cube = getInitialCube();
         Printer.printCube(cube);
-        Rotation rotation = new Rotation();
+    }
+
+    public void start(Scanner sc) {
         String input = "";
         long startTime = System.currentTimeMillis();
         while (!input.equalsIgnoreCase("q")) {
@@ -27,6 +32,10 @@ public class Main {
                 continue;
             }
             cube = getNewCube(cube, input, rotation);
+            if (Arrays.deepEquals(cube, getInitialCube())) {
+                System.out.println("< < < 축하합니다. 모두 맞히셨습니다!!! > > >");
+                break;
+            }
         }
         long endTime = System.currentTimeMillis();        
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
@@ -51,7 +60,7 @@ public class Main {
             if (targetDimension == -1) continue;
             cube = getCube(target, cube, rotation, targetDimension);
             Printer.printCube(cube);
-            
+
             if ((i != input.length() - 1) && input.charAt(i + 1) == '2') {
                 System.out.println(target);
                 cube = getCube(target, cube, rotation, targetDimension);
@@ -93,26 +102,24 @@ public class Main {
     }
 
     public String[][][] getInitialCube() {
-        String[][][] cube = {
-            {   { "B", "B", "B" },      // 초기 up, index 0
-                { "B", "B", "B" },
-                { "B", "B", "B" }   },
-            {   { "W", "W", "W" },      // 초기 left, index 1
-                { "W", "W", "W" },
-                { "W", "W", "W" }   },
-            {   { "O", "O", "O" },      // 초기 front, index 2
-                { "O", "O", "O" },
-                { "O", "O", "O" }   },    
-            {   { "G", "G", "G" },      // 초기 right, index 3
-                { "G", "G", "G" },
-                { "G", "G", "G" }   },
-            {   { "Y", "Y", "Y" },      // 초기 back, index 4
-                { "Y", "Y", "Y" },
-                { "Y", "Y", "Y" }   },
-            {   { "R", "R", "R" },      // 초기 down, index 5
-                { "R", "R", "R" },
-                { "R", "R", "R" }   }
-        };
+        String[][][] cube = {   {   { "B", "B", "B" },      // 초기 up, index 0
+                                    { "B", "B", "B" },
+                                    { "B", "B", "B" }   },
+                                {   { "W", "W", "W" },      // 초기 left, index 1
+                                    { "W", "W", "W" },
+                                    { "W", "W", "W" }   },
+                                {   { "O", "O", "O" },      // 초기 front, index 2
+                                    { "O", "O", "O" },
+                                    { "O", "O", "O" }   },    
+                                {   { "G", "G", "G" },      // 초기 right, index 3
+                                    { "G", "G", "G" },
+                                    { "G", "G", "G" }   },
+                                {   { "Y", "Y", "Y" },      // 초기 back, index 4
+                                    { "Y", "Y", "Y" },
+                                    { "Y", "Y", "Y" }   },
+                                {   { "R", "R", "R" },      // 초기 down, index 5
+                                    { "R", "R", "R" },
+                                    { "R", "R", "R" }   }   };
         return cube;
     }
 }
