@@ -1,7 +1,10 @@
 import java.util.*;
 
+import direction.Clockwise;
+
 public class Main {
 
+    int rotationCount = 0;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Main main = new Main();
@@ -10,23 +13,36 @@ public class Main {
     }
 
     public void start(Scanner sc) {
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        long startTime = cal.getTimeInMillis();
         String[][][] cube = getInitialCube();
         Printer.printCube(cube);
-        Rotation rot = new Rotation();
-        while (true) {
+        Rotation rotation = new Rotation();
+        String input = "";
+        while (!input.equalsIgnoreCase("q")) {
             System.out.print("CUBE> ");
-            String input = sc.nextLine();
-            cube = getNewCube(cube, input, rot);
+            input = sc.nextLine();
+            cube = getNewCube(cube, input, rotation);
         }
+        long endTime = cal2.getTimeInMillis();
+        System.out.println("경과시간: " + (endTime - startTime)/1000 + "초");
+        System.out.println("조작갯수: " + rotationCount);
+        System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
     }
 
-    public String[][][] getNewCube(String[][][] cube, String input, Rotation rot) {
+    public String[][][] getNewCube(String[][][] cube, String input, Rotation rotation) {
         String target = "";
         for (int i = 0; i < input.length(); i++) {
             target = input.charAt(i) + "";
             int targetDimension = inputTargetDimension(target);
             if (targetDimension == -1) continue;
-            cube = rot.rotateClockwise(cube, targetDimension);
+            if ((i != input.length() -1)
+            && (input.charAt(i + 1) + "").equals("'")) {
+                cube = rotation.rotateCounterClockwise(cube, targetDimension);
+            } else {
+                cube = rotation.rotateClockwise(cube, targetDimension);
+            }
             Printer.printCube(cube);
         }
         return cube;
@@ -45,6 +61,7 @@ public class Main {
         }
         if (0 <= targetDimension && targetDimension <= 5) {
             System.out.println(rotation);
+            rotationCount++;
         }
         return targetDimension;
     }
