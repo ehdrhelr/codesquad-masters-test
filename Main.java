@@ -37,8 +37,7 @@ public class Main {
             target = input.charAt(i) + "";
             int targetDimension = inputTargetDimension(target);
             if (targetDimension == -1) continue;
-            if ((i != input.length() -1)
-            && (input.charAt(i + 1) + "").equals("'")) {
+            if ((i != input.length() -1) && (input.charAt(i + 1) + "").equals("'")) {
                 cube = rotation.rotateCounterClockwise(cube, targetDimension);
             } else {
                 cube = rotation.rotateClockwise(cube, targetDimension);

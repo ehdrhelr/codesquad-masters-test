@@ -21,7 +21,7 @@ public class Rotation {
     public String[][][] rotateCounterClockwise(String[][][] cube, int targetDimension) {
         String[][][] newCube = new String[6][3][3];
         newCube = counterClockwise.rotateTargetDimension(newCube, cube, targetDimension);
-        // newCube = rotateOtherDimensions(newCube, cube, targetDimension);
+        newCube = counterClockwise.rotateOtherDimensions(newCube, cube, targetDimension);
         return newCube;
     }
 }
