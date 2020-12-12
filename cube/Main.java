@@ -49,12 +49,14 @@ public class Main {
             }
             int targetDimension = inputTargetDimension(target);
             if (targetDimension == -1) continue;
-            if (target.endsWith("'")) {
-                cube = rotation.rotateCounterClockwise(cube, targetDimension);
-            } else {
-                cube = rotation.rotateClockwise(cube, targetDimension);
-            }
+            cube = getCube(target, cube, rotation, targetDimension);
             Printer.printCube(cube);
+            
+            if ((i != input.length() - 1) && input.charAt(i + 1) == '2') {
+                System.out.println(target);
+                cube = getCube(target, cube, rotation, targetDimension);
+                Printer.printCube(cube);
+            }
         }
         return cube;
     }
@@ -66,6 +68,16 @@ public class Main {
             rotationCount++;
         }
         return targetDimension;
+    }
+
+    public static String[][][] getCube(
+                String target, String[][][] cube, Rotation rotation, int targetDimension) {        
+        if (target.endsWith("'")) {
+            cube = rotation.rotateCounterClockwise(cube, targetDimension);
+        } else {
+            cube = rotation.rotateClockwise(cube, targetDimension);
+        }
+        return cube;
     }
 
     public int getTargetDimensionByInput(String direction) {
