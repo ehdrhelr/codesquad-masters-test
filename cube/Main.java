@@ -1,6 +1,7 @@
-import java.util.*;
+package cube;
 
-import direction.Clockwise;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Main {
 
@@ -9,35 +10,45 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Main main = new Main();
         main.start(sc);
-        
     }
 
     public void start(Scanner sc) {
-        Calendar cal = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        long startTime = cal.getTimeInMillis();
         String[][][] cube = getInitialCube();
         Printer.printCube(cube);
         Rotation rotation = new Rotation();
         String input = "";
+        long startTime = System.currentTimeMillis();
+        System.out.println(startTime);
         while (!input.equalsIgnoreCase("q")) {
             System.out.print("CUBE> ");
             input = sc.nextLine();
             cube = getNewCube(cube, input, rotation);
         }
-        long endTime = cal2.getTimeInMillis();
-        System.out.println("경과시간: " + (endTime - startTime)/1000 + "초");
+        long endTime = System.currentTimeMillis();
+        
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+        String time = simpleDateFormat.format(endTime - startTime);
+        
+        System.out.println("경과시간: " + time);
         System.out.println("조작갯수: " + rotationCount);
         System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
+    }
+
+    public long getCurrentTime() {
+        Calendar cal = Calendar.getInstance();
+        return cal.getTimeInMillis();
     }
 
     public String[][][] getNewCube(String[][][] cube, String input, Rotation rotation) {
         String target = "";
         for (int i = 0; i < input.length(); i++) {
             target = input.charAt(i) + "";
+            if ((i != input.length() -1) && (input.charAt(i + 1) + "").equals("'")) {
+                target += "'";
+            }
             int targetDimension = inputTargetDimension(target);
             if (targetDimension == -1) continue;
-            if ((i != input.length() -1) && (input.charAt(i + 1) + "").equals("'")) {
+            if (target.endsWith("'")) {
                 cube = rotation.rotateCounterClockwise(cube, targetDimension);
             } else {
                 cube = rotation.rotateClockwise(cube, targetDimension);
@@ -51,12 +62,12 @@ public class Main {
         System.out.println();
         int targetDimension = -1;
         switch(rotation) {
-            case "U" : targetDimension = 0; break;
-            case "L" : targetDimension = 1; break;
-            case "F" : targetDimension = 2; break;
-            case "R" : targetDimension = 3; break;
-            case "B" : targetDimension = 4; break;
-            case "D" : targetDimension = 5; break;
+            case "U" : case "U'" : targetDimension = 0; break;
+            case "L" : case "L'" : targetDimension = 1; break;
+            case "F" : case "F'" : targetDimension = 2; break;
+            case "R" : case "R'" : targetDimension = 3; break;
+            case "B" : case "B'" : targetDimension = 4; break;
+            case "D" : case "D'" : targetDimension = 5; break;
         }
         if (0 <= targetDimension && targetDimension <= 5) {
             System.out.println(rotation);

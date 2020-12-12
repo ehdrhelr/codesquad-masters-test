@@ -1,3 +1,5 @@
+package cube;
+
 import direction.Clockwise;
 import direction.CounterClockwise;
 

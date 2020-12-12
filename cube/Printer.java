@@ -1,3 +1,5 @@
+package cube;
+
 public class Printer {
 
     public static void printCube(String[][][] cube) {
