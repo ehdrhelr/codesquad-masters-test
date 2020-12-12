@@ -8,6 +8,7 @@ public class Main {
     int rotationCount = 0;
     Rotation rotation;
     String[][][] cube;
+    SimpleDateFormat simpleDateFormat;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Main main = new Main();
@@ -17,11 +18,12 @@ public class Main {
     Main() {
         rotation = new Rotation();
         cube = getInitialCube();
-        Printer.printCube(cube);
+        simpleDateFormat = new SimpleDateFormat("mm:ss");
     }
 
     public void start(Scanner sc) {
         String input = "";
+        Printer.printCube(cube);
         long startTime = System.currentTimeMillis();
         while (!input.equalsIgnoreCase("q")) {
             System.out.print("CUBE> ");
@@ -32,13 +34,13 @@ public class Main {
                 continue;
             }
             cube = getNewCube(cube, input, rotation);
-            if (Arrays.deepEquals(cube, getInitialCube())) {
+            if (!input.equalsIgnoreCase("q") && Arrays.deepEquals(cube, getInitialCube())) {
                 System.out.println("< < < 축하합니다. 모두 맞히셨습니다!!! > > >");
                 break;
             }
         }
         long endTime = System.currentTimeMillis();        
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+        
         String time = simpleDateFormat.format(endTime - startTime);
         printResult(time);
     }
