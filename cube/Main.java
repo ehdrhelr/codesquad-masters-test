@@ -18,33 +18,34 @@ public class Main {
         Rotation rotation = new Rotation();
         String input = "";
         long startTime = System.currentTimeMillis();
-        System.out.println(startTime);
         while (!input.equalsIgnoreCase("q")) {
             System.out.print("CUBE> ");
             input = sc.nextLine();
+            System.out.println();
+            if (input.equals("shuffle")) {
+                Shuffle.start(cube, rotation);
+                continue;
+            }
             cube = getNewCube(cube, input, rotation);
         }
-        long endTime = System.currentTimeMillis();
-        
+        long endTime = System.currentTimeMillis();        
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
         String time = simpleDateFormat.format(endTime - startTime);
-        
+        printResult(time);
+    }
+
+    public void printResult(String time) {
         System.out.println("경과시간: " + time);
         System.out.println("조작갯수: " + rotationCount);
         System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
     }
 
-    public long getCurrentTime() {
-        Calendar cal = Calendar.getInstance();
-        return cal.getTimeInMillis();
-    }
-
     public String[][][] getNewCube(String[][][] cube, String input, Rotation rotation) {
-        String target = "";
         for (int i = 0; i < input.length(); i++) {
-            target = input.charAt(i) + "";
-            if ((i != input.length() -1) && (input.charAt(i + 1) + "").equals("'")) {
+            String target = input.charAt(i) + "";
+            if ((i != input.length() - 1) && (input.charAt(i + 1) + "").equals("'")) {
                 target += "'";
+                i++;
             }
             int targetDimension = inputTargetDimension(target);
             if (targetDimension == -1) continue;
@@ -58,22 +59,25 @@ public class Main {
         return cube;
     }
 
-    public int inputTargetDimension(String rotation) {
-        System.out.println();
-        int targetDimension = -1;
-        switch(rotation) {
-            case "U" : case "U'" : targetDimension = 0; break;
-            case "L" : case "L'" : targetDimension = 1; break;
-            case "F" : case "F'" : targetDimension = 2; break;
-            case "R" : case "R'" : targetDimension = 3; break;
-            case "B" : case "B'" : targetDimension = 4; break;
-            case "D" : case "D'" : targetDimension = 5; break;
-        }
+    public int inputTargetDimension(String direction) {
+        int targetDimension = getTargetDimensionByInput(direction);
         if (0 <= targetDimension && targetDimension <= 5) {
-            System.out.println(rotation);
+            System.out.println(direction);
             rotationCount++;
         }
         return targetDimension;
+    }
+
+    public int getTargetDimensionByInput(String direction) {
+        switch(direction) {
+            case "U" : case "U'" : return 0;
+            case "L" : case "L'" : return 1;
+            case "F" : case "F'" : return 2;
+            case "R" : case "R'" : return 3;
+            case "B" : case "B'" : return 4;
+            case "D" : case "D'" : return 5;
+        }
+        return -1;
     }
 
     public String[][][] getInitialCube() {

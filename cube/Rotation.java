@@ -1,7 +1,7 @@
 package cube;
 
-import direction.Clockwise;
-import direction.CounterClockwise;
+import cube.direction.Clockwise;
+import cube.direction.CounterClockwise;
 
 public class Rotation {
 
