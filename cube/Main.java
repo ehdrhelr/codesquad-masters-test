@@ -38,7 +38,6 @@ public class Main {
             }
         }
         long endTime = System.currentTimeMillis();        
-        
         String time = simpleDateFormat.format(endTime - startTime);
         printResult(time);
     }
