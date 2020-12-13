@@ -6,7 +6,7 @@
       - 'Initial commit' <17da4d5> ~ 'update README.md' <736ecec>
 
   2. 2단계 미션
-      - 'impl initial print' \<abcbaef> ~ 'Merge branch 'step-2' of https://github.com/ehdrhelr/codesquad-master… …' <996f107>
+      - 'impl initial print' \<abcbaef> ~ 'Merge branch 'step-2' of https://github.com/ehdrhelr/codesquad-masters-test into step-2' <996f107>
   
   3. 3단계 미션
       - open branch step-3 <6f47f92> ~ fix(bug) : save rotated cube after shuffle <8ebd408>
