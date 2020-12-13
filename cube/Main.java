@@ -28,7 +28,7 @@ public class Main {
             input = sc.nextLine();
             System.out.println();
             if (input.equals("shuffle")) {
-                Shuffle.start(cube);
+                cube = Shuffle.start(cube);
                 continue;
             }
             cube = getNewCube(cube, input);

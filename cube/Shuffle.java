@@ -7,7 +7,7 @@ public class Shuffle {
     public static String[] directions 
         = {"U", "U'", "L", "L'", "F", "F'", "R", "R'", "B", "B'", "D", "D'"};
 
-    public static void start(String[][][] cube) {
+    public static String[][][] start(String[][][] cube) {
         Main main = new Main();
         for (int i = 0; i < 100; i++) {
             int randomIndex = (int) (Math.random() * directions.length);
@@ -16,6 +16,7 @@ public class Shuffle {
             cube = getCube(direction, cube, targetDimension);
         }
         Printer.printCube(cube);
+        return cube;
     }
 
     public static String[][][] getCube(
