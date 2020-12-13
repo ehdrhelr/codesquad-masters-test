@@ -4,26 +4,22 @@ import cube.direction.Clockwise;
 import cube.direction.CounterClockwise;
 
 public class Rotation {
-
-    Clockwise clockwise;
-    CounterClockwise counterClockwise;
     
     Rotation() {
-        clockwise = new Clockwise();
-        counterClockwise = new CounterClockwise();
+
     }
     
-    public String[][][] rotateClockwise(String[][][] cube, int targetDimension) {
+    public static String[][][] rotateClockwise(String[][][] cube, int targetDimension) {
         String[][][] newCube = new String[6][3][3];
-        newCube = clockwise.rotateTargetDimension(newCube, cube, targetDimension);
-        newCube = clockwise.rotateOtherDimensions(newCube, cube, targetDimension);
+        newCube = Clockwise.rotateTargetDimension(newCube, cube, targetDimension);
+        newCube = Clockwise.rotateOtherDimensions(newCube, cube, targetDimension);
         return newCube;
     }
 
-    public String[][][] rotateCounterClockwise(String[][][] cube, int targetDimension) {
+    public static String[][][] rotateCounterClockwise(String[][][] cube, int targetDimension) {
         String[][][] newCube = new String[6][3][3];
-        newCube = counterClockwise.rotateTargetDimension(newCube, cube, targetDimension);
-        newCube = counterClockwise.rotateOtherDimensions(newCube, cube, targetDimension);
+        newCube = CounterClockwise.rotateTargetDimension(newCube, cube, targetDimension);
+        newCube = CounterClockwise.rotateOtherDimensions(newCube, cube, targetDimension);
         return newCube;
     }
 }

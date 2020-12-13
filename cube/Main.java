@@ -6,7 +6,6 @@ import java.util.*;
 public class Main {
 
     int rotationCount = 0;
-    Rotation rotation;
     String[][][] cube;
     SimpleDateFormat simpleDateFormat;
     public static void main(String[] args) {
@@ -16,7 +15,6 @@ public class Main {
     }
 
     Main() {
-        rotation = new Rotation();
         cube = getInitialCube();
         simpleDateFormat = new SimpleDateFormat("mm:ss");
     }
@@ -30,10 +28,10 @@ public class Main {
             input = sc.nextLine();
             System.out.println();
             if (input.equals("shuffle")) {
-                Shuffle.start(cube, rotation);
+                Shuffle.start(cube);
                 continue;
             }
-            cube = getNewCube(cube, input, rotation);
+            cube = getNewCube(cube, input);
             if (!input.equalsIgnoreCase("q") && Arrays.deepEquals(cube, getInitialCube())) {
                 System.out.println("< < < 축하합니다. 모두 맞히셨습니다!!! > > >");
                 break;
@@ -51,7 +49,7 @@ public class Main {
         System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
     }
 
-    public String[][][] getNewCube(String[][][] cube, String input, Rotation rotation) {
+    public String[][][] getNewCube(String[][][] cube, String input) {
         for (int i = 0; i < input.length(); i++) {
             String target = input.charAt(i) + "";
             if ((i != input.length() - 1) && (input.charAt(i + 1) + "").equals("'")) {
@@ -60,12 +58,12 @@ public class Main {
             }
             int targetDimension = inputTargetDimension(target);
             if (targetDimension == -1) continue;
-            cube = getCube(target, cube, rotation, targetDimension);
+            cube = getCube(target, cube, targetDimension);
             Printer.printCube(cube);
 
             if ((i != input.length() - 1) && input.charAt(i + 1) == '2') {
                 System.out.println(target);
-                cube = getCube(target, cube, rotation, targetDimension);
+                cube = getCube(target, cube, targetDimension);
                 Printer.printCube(cube);
             }
         }
@@ -81,12 +79,12 @@ public class Main {
         return targetDimension;
     }
 
-    public static String[][][] getCube(
-                String target, String[][][] cube, Rotation rotation, int targetDimension) {        
+    public String[][][] getCube(
+                String target, String[][][] cube, int targetDimension) {        
         if (target.endsWith("'")) {
-            cube = rotation.rotateCounterClockwise(cube, targetDimension);
+            cube = Rotation.rotateCounterClockwise(cube, targetDimension);
         } else {
-            cube = rotation.rotateClockwise(cube, targetDimension);
+            cube = Rotation.rotateClockwise(cube, targetDimension);
         }
         return cube;
     }

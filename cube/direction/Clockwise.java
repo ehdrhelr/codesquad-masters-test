@@ -2,7 +2,7 @@ package cube.direction;
 
 public class Clockwise {    
 
-    public String[][][] rotateTargetDimension(
+    public static String[][][] rotateTargetDimension(
                             String[][][] newCube, String[][][] cube, int targetDimension) {
         newCube = rotateTopToRight(newCube, cube, targetDimension);
         newCube = rotateRightToBottom(newCube, cube, targetDimension);
@@ -13,7 +13,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateTopToRight(
+    public static String[][][] rotateTopToRight(
                                 String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
             newCube[targetDimension][i][2] = cube[targetDimension][0][i];
@@ -21,7 +21,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateRightToBottom(
+    public static String[][][] rotateRightToBottom(
                                 String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
             newCube[targetDimension][2][cube[targetDimension].length - i - 1]
@@ -30,7 +30,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateBottomToLeft(
+    public static String[][][] rotateBottomToLeft(
                                 String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
             newCube[targetDimension][i][0] = cube[targetDimension][2][i];
@@ -38,7 +38,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateLeftToTop(
+    public static String[][][] rotateLeftToTop(
                                 String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube[targetDimension].length; i++) {
             newCube[targetDimension][0][cube[targetDimension].length - i - 1]
@@ -47,7 +47,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] inputOldDataExceptTargetDimension(
+    public static String[][][] inputOldDataExceptTargetDimension(
                                     String[][][] newCube, String[][][] cube, int targetDimension) {
         for (int i = 0; i < cube.length; i++) {
             if (i == targetDimension) continue;
@@ -58,14 +58,14 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] inputElements(String[][][] newCube, String[][][] cube, int i, int j) {
+    public static String[][][] inputElements(String[][][] newCube, String[][][] cube, int i, int j) {
         for (int k = 0; k < cube[i][j].length; k++) {
             newCube[i][j][k] = cube[i][j][k];
         }
         return newCube;
     }
 
-    public String[][][] rotateOtherDimensions(
+    public static String[][][] rotateOtherDimensions(
                             String[][][] newCube, String[][][] cube, int targetDimension) {
         if (targetDimension == 0) {
             return rotateSideDimensionsOfUp(newCube, cube);
@@ -88,7 +88,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateSideDimensionsOfUp(String[][][] newCube, String[][][] cube) {
+    public static String[][][] rotateSideDimensionsOfUp(String[][][] newCube, String[][][] cube) {
         for (int i = 1; i < cube.length - 1; i++) {
             for (int j = 0; j < cube[i][0].length; j++) {
                 newCube[getTargetIndexOfSideDimensionsOfUp(i)][0][j] = cube[i][0][j];
@@ -97,7 +97,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public int getTargetIndexOfSideDimensionsOfUp(int i) {
+    public static int getTargetIndexOfSideDimensionsOfUp(int i) {
         int targetFirstIndex = i - 1;
         if (targetFirstIndex < 1) {
             targetFirstIndex = 4;
@@ -105,7 +105,7 @@ public class Clockwise {
         return targetFirstIndex;
     }
 
-    public String[][][] rotateSideDimensionsOfLeft(String[][][] newCube, String[][][] cube) {
+    public static String[][][] rotateSideDimensionsOfLeft(String[][][] newCube, String[][][] cube) {
         for (int i = 0; i < cube[0].length; i++) {
             newCube[2][i][0] = cube[0][i][0];
         }
@@ -121,7 +121,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateSideDimensionsOfFront(String[][][] newCube, String[][][] cube) {
+    public static String[][][] rotateSideDimensionsOfFront(String[][][] newCube, String[][][] cube) {
         for (int i = 0; i < cube[0].length; i++) {
             newCube[3][i][0] = cube[0][2][i];
         }
@@ -137,7 +137,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateSideDimensionsOfRight(String[][][] newCube, String[][][] cube) {
+    public static String[][][] rotateSideDimensionsOfRight(String[][][] newCube, String[][][] cube) {
         for (int i = 0; i < cube[0].length; i++) {
             newCube[4][i][0] = cube[0][cube[0].length - i - 1][2];
         }
@@ -153,7 +153,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateSideDimensionsOfBack(String[][][] newCube, String[][][] cube) {
+    public static String[][][] rotateSideDimensionsOfBack(String[][][] newCube, String[][][] cube) {
         for (int i = 0; i < cube[0].length; i++) {
             newCube[1][cube[1].length - i - 1][0] = cube[0][0][i];
         }
@@ -169,7 +169,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public String[][][] rotateSideDimensionsOfDown(String[][][] newCube, String[][][] cube) {
+    public static String[][][] rotateSideDimensionsOfDown(String[][][] newCube, String[][][] cube) {
         for (int i = 1; i < cube.length - 1; i++) {
             for (int j = 0; j < cube[i][0].length; j++) {
                 newCube[getTargetIndexOfSideDimensionsOfDown(i)][2][j] = cube[i][2][j];
@@ -178,7 +178,7 @@ public class Clockwise {
         return newCube;
     }
 
-    public int getTargetIndexOfSideDimensionsOfDown(int i) {
+    public static int getTargetIndexOfSideDimensionsOfDown(int i) {
         int targetFirstIndex = i + 1;
         if (targetFirstIndex > 4) {
             targetFirstIndex = 1;
